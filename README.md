@@ -42,7 +42,32 @@ php artisan vendor:publish --tag="laravel-subscriptions-config"
 This is the contents of the published config file:
 
 ```php
+
 return [
+
+    // Manage autoload migrations
+    'autoload_migrations' => true,
+
+    // Subscriptions Database Tables
+    'tables' => [
+
+        'plans' => 'plans',
+        'plan_features' => 'plan_features',
+        'plan_subscriptions' => 'plan_subscriptions',
+        'plan_subscription_usage' => 'plan_subscription_usage',
+
+    ],
+
+    // Subscriptions Models
+    'models' => [
+
+        'plan' => \Soap\LaravelSubscriptions\Models\Plan::class,
+        'plan_feature' => \Soap\LaravelSubscriptions\Models\PlanFeature::class,
+        'plan_subscription' => \Soap\LaravelSubscriptions\Models\PlanSubscription::class,
+        'plan_subscription_usage' => \Soap\LaravelSubscriptions\Models\PlanSubscriptionUsage::class,
+
+    ],
+
 ];
 ```
 
@@ -78,7 +103,7 @@ Please see [CONTRIBUTING](https://github.com/spatie/.github/blob/main/CONTRIBUTI
 Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
 
 ## Credits
-
+- Rinvex for their excellent package, laravel-subscriptions (code base for this package)
 - [Prasit Gebsaap](https://github.com/soap)
 - [All Contributors](../../contributors)
 
