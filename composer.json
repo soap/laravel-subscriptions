@@ -17,8 +17,15 @@
     ],
     "require": {
         "php": "^8.0",
+        "illuminate/console": "^9.0",
+        "illuminate/contracts": "^9.0",
+        "illuminate/database": "^9.0",
+        "illuminate/support": "^9.0",
+        "rinvex/laravel-support": "^6.1",
+        "spatie/eloquent-sortable": "^4.0.1",
         "spatie/laravel-package-tools": "^1.9.2",
-        "illuminate/contracts": "^9.0"
+        "spatie/laravel-sluggable": "3.3.1",
+        "spatie/laravel-translatable": "^6.0.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.8",
@@ -33,6 +40,12 @@
         "phpunit/phpunit": "^9.5",
         "spatie/laravel-ray": "^1.26"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/laravel-shift/uniquewith-validator.git"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "Soap\\LaravelSubscriptions\\": "src",
