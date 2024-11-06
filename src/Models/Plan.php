@@ -4,74 +4,49 @@ declare(strict_types=1);
 
 namespace Soap\LaravelSubscriptions\Models;
 
-use Spatie\Sluggable\SlugOptions;
-use Rinvex\Support\Traits\HasSlug;
-use Spatie\EloquentSortable\Sortable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Rinvex\Support\Traits\HasTranslations;
-use Rinvex\Support\Traits\ValidatingTrait;
-use Spatie\EloquentSortable\SortableTrait;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
+use Spatie\Translatable\HasTranslations;
 
 /**
- * Rinvex\Subscriptions\Models\Plan.
- *
- * @property int                                                                                          $id
- * @property string                                                                                       $slug
- * @property array                                                                                        $name
- * @property array                                                                                        $description
- * @property bool                                                                                         $is_active
- * @property float                                                                                        $price
- * @property float                                                                                        $signup_fee
- * @property string                                                                                       $currency
- * @property int                                                                                          $trial_period
- * @property string                                                                                       $trial_interval
- * @property int                                                                                          $invoice_period
- * @property string                                                                                       $invoice_interval
- * @property int                                                                                          $grace_period
- * @property string                                                                                       $grace_interval
- * @property int                                                                                          $prorate_day
- * @property int                                                                                          $prorate_period
- * @property int                                                                                          $prorate_extend_due
- * @property int                                                                                          $active_subscribers_limit
- * @property int                                                                                          $sort_order
- * @property \Carbon\Carbon|null                                                                          $created_at
- * @property \Carbon\Carbon|null                                                                          $updated_at
- * @property \Carbon\Carbon|null                                                                          $deleted_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Subscriptions\Models\PlanFeature[]      $features
- * @property-read \Illuminate\Database\Eloquent\Collection|\Rinvex\Subscriptions\Models\PlanSubscription[] $subscriptions
- *
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan ordered($direction = 'asc')
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereActiveSubscribersLimit($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereCurrency($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereGraceInterval($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereGracePeriod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereInvoiceInterval($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereInvoicePeriod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereIsActive($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereProrateDay($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereProrateExtendDue($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereProratePeriod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereSignupFee($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereSortOrder($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereTrialInterval($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereTrialPeriod($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Rinvex\Subscriptions\Models\Plan whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property int $id
+ * @property string $slug
+ * @property string $name
+ * @property string $description
+ * @property bool $is_active
+ * @property float $price
+ * @property float $signup_fee
+ * @property string $currency
+ * @property int $trial_period
+ * @property string $trial_interval
+ * @property int $invoice_period
+ * @property string $invoice_interval
+ * @property int $grace_period
+ * @property string $grace_interval
+ * @property int $prorate_day
+ * @property int $prorate_period
+ * @property int $prorate_extend_due
+ * @property int $active_subscribers_limit
+ * @property int $sort_order
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property \Carbon\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Soap\LaravelSubscriptions\Models\PlanFeature[] $features
+ * @property-read int|null $features_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Soap\LaravelSubscriptions\Models\PlanSubscription[] $subscriptions
+ * @property-read int|null $subscriptions_count
  */
 class Plan extends Model implements Sortable
 {
+    use HasFactory;
     use HasSlug;
-    use SortableTrait;
     use HasTranslations;
-    use ValidatingTrait;
+    use SortableTrait;
 
     /**
      * {@inheritdoc}
@@ -162,11 +137,7 @@ class Plan extends Model implements Sortable
      */
     protected $throwValidationExceptions = true;
 
-    /**
-     * Create a new Eloquent model instance.
-     *
-     * @param array $attributes
-     */
+    /*
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
@@ -193,24 +164,26 @@ class Plan extends Model implements Sortable
             'active_subscribers_limit' => 'nullable|integer|max:10000',
         ]);
     }
+    */
+
+    public function getTable()
+    {
+        return config('subscriptions.tables.plans');
+    }
 
     /**
      * Get the options for generating the slug.
-     *
-     * @return \Spatie\Sluggable\SlugOptions
      */
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-                          ->doNotGenerateSlugsOnUpdate()
-                          ->generateSlugsFrom('name')
-                          ->saveSlugsTo('slug');
+            ->doNotGenerateSlugsOnUpdate()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 
     /**
      * The plan may have many features.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function features(): HasMany
     {
@@ -219,8 +192,6 @@ class Plan extends Model implements Sortable
 
     /**
      * The plan may have many subscriptions.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function subscriptions(): HasMany
     {
@@ -229,8 +200,6 @@ class Plan extends Model implements Sortable
 
     /**
      * Check if plan is free.
-     *
-     * @return bool
      */
     public function isFree(): bool
     {
@@ -239,8 +208,6 @@ class Plan extends Model implements Sortable
 
     /**
      * Check if plan has trial.
-     *
-     * @return bool
      */
     public function hasTrial(): bool
     {
@@ -249,23 +216,15 @@ class Plan extends Model implements Sortable
 
     /**
      * Check if plan has grace.
-     *
-     * @return bool
      */
     public function hasGrace(): bool
     {
         return $this->grace_period && $this->grace_interval;
     }
 
-    /**
-     * Get plan feature by the given slug.
-     *
-     * @param string $featureSlug
-     *
-     * @return \Rinvex\Subscriptions\Models\PlanFeature|null
-     */
     public function getFeatureBySlug(string $featureSlug): ?PlanFeature
     {
+        /** @var PlanFeature */
         return $this->features()->where('slug', $featureSlug)->first();
     }
 

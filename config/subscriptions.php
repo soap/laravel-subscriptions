@@ -9,7 +9,6 @@ return [
 
     // Subscriptions Database Tables
     'tables' => [
-
         'plans' => 'plans',
         'plan_features' => 'plan_features',
         'plan_subscriptions' => 'plan_subscriptions',
@@ -19,7 +18,6 @@ return [
 
     // Subscriptions Models
     'models' => [
-
         'plan' => \Soap\LaravelSubscriptions\Models\Plan::class,
         'plan_feature' => \Soap\LaravelSubscriptions\Models\PlanFeature::class,
         'plan_subscription' => \Soap\LaravelSubscriptions\Models\PlanSubscription::class,

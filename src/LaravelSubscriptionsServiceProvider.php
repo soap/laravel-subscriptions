@@ -2,9 +2,9 @@
 
 namespace Soap\LaravelSubscriptions;
 
+use Soap\LaravelSubscriptions\Commands\LaravelSubscriptionsCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use Soap\LaravelSubscriptions\Commands\LaravelSubscriptionsCommand;
 
 class LaravelSubscriptionsServiceProvider extends PackageServiceProvider
 {
