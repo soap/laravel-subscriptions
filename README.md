@@ -1,7 +1,7 @@
 # Subscription management package for Laravel application.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/soap/laravel-subscriptions.svg?style=flat-square)](https://packagist.org/packages/soap/laravel-subscriptions)
-[![GitHub Tests Action Status](https://img.shields.io/github/workflow/status/soap/laravel-subscriptions/run-tests?label=tests)](https://github.com/soap/laravel-subscriptions/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![run-tests](https://github.com/soap/laravel-subscriptions/actions/workflows/run-tests.yml/badge.svg)](https://github.com/soap/laravel-subscriptions/actions/workflows/run-tests.yml)
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/soap/laravel-subscriptions/Check%20&%20fix%20styling?label=code%20style)](https://github.com/soap/laravel-subscriptions/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/soap/laravel-subscriptions.svg?style=flat-square)](https://packagist.org/packages/soap/laravel-subscriptions)
 
