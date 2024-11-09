@@ -22,7 +22,6 @@ return [
         'plan_feature' => \Soap\LaravelSubscriptions\Models\PlanFeature::class,
         'plan_subscription' => \Soap\LaravelSubscriptions\Models\PlanSubscription::class,
         'plan_subscription_usage' => \Soap\LaravelSubscriptions\Models\PlanSubscriptionUsage::class,
-
     ],
 
 ];

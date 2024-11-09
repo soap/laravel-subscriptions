@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Soap\LaravelSubscriptions\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Soap\LaravelSubscriptions\Period;
 use Spatie\EloquentSortable\Sortable;
@@ -36,6 +38,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class PlanFeature extends Model implements Sortable
 {
+    use HasFactory;
     use HasSlug;
     use HasTranslations;
     use SortableTrait;
@@ -118,5 +121,15 @@ class PlanFeature extends Model implements Sortable
         $period = new Period($this->resettable_interval, $this->resettable_period, $dateFrom ?? now());
 
         return $period->getEndDate();
+    }
+
+    public function isResettable(): bool
+    {
+        return $this->resettable_period > 0;
+    }
+
+    public function plan(): BelongsTo
+    {
+        return $this->belongsTo(config('subscriptions.models.plan'));
     }
 }

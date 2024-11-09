@@ -122,50 +122,6 @@ class Plan extends Model implements Sortable
         'order_column_name' => 'sort_order',
     ];
 
-    /**
-     * The default rules that the model will validate against.
-     *
-     * @var array
-     */
-    protected $rules = [];
-
-    /**
-     * Whether the model should throw a
-     * ValidationException if it fails validation.
-     *
-     * @var bool
-     */
-    protected $throwValidationExceptions = true;
-
-    /*
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-
-        $this->setTable(config('subscriptions.tables.plans'));
-        $this->setRules([
-            'slug' => 'required|alpha_dash|max:150|unique:'.config('subscriptions.tables.plans').',slug',
-            'name' => 'required|string|strip_tags|max:150',
-            'description' => 'nullable|string|max:10000',
-            'is_active' => 'sometimes|boolean',
-            'price' => 'required|numeric',
-            'signup_fee' => 'required|numeric',
-            'currency' => 'required|alpha|size:3',
-            'trial_period' => 'sometimes|integer|max:10000',
-            'trial_interval' => 'sometimes|in:hour,day,week,month',
-            'invoice_period' => 'sometimes|integer|max:10000',
-            'invoice_interval' => 'sometimes|in:hour,day,week,month',
-            'grace_period' => 'sometimes|integer|max:10000',
-            'grace_interval' => 'sometimes|in:hour,day,week,month',
-            'sort_order' => 'nullable|integer|max:10000',
-            'prorate_day' => 'nullable|integer|max:150',
-            'prorate_period' => 'nullable|integer|max:150',
-            'prorate_extend_due' => 'nullable|integer|max:150',
-            'active_subscribers_limit' => 'nullable|integer|max:10000',
-        ]);
-    }
-    */
-
     public function getTable()
     {
         return config('subscriptions.tables.plans');

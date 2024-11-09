@@ -24,7 +24,7 @@ return new class extends Migration
             $table->timestamp('trial_ends_at')->nullable();
             $table->timestamp('starts_at')->nullable();
             $table->timestamp('ends_at')->nullable();
-            $table->timestamps('cancels_at')->nullable();
+            $table->timestamp('cancels_at')->nullable();
             $table->timestamp('canceled_at')->nullable();
             $table->string('timezone')->nullable();
             $table->timestamps();
