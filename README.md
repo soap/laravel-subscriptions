@@ -1,6 +1,7 @@
 # Subscription management package for Laravel application.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/soap/laravel-subscriptions.svg?style=flat-square)](https://packagist.org/packages/soap/laravel-subscriptions)
+[![PHPStan](https://github.com/soap/laravel-subscriptions/actions/workflows/phpstan.yml/badge.svg)](https://github.com/soap/laravel-subscriptions/actions/workflows/phpstan.yml)
 [![run-tests](https://github.com/soap/laravel-subscriptions/actions/workflows/run-tests.yml/badge.svg)](https://github.com/soap/laravel-subscriptions/actions/workflows/run-tests.yml)
 [![Check & fix styling](https://github.com/soap/laravel-subscriptions/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/soap/laravel-subscriptions/actions/workflows/php-cs-fixer.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/soap/laravel-subscriptions.svg?style=flat-square)](https://packagist.org/packages/soap/laravel-subscriptions)
