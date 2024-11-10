@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create(config('subscriptions.tables.plan_features'), function (Blueprint $table) {
             $table->id();
-            $table->foreignId('plan_id')->constrained(config('subscriptions.tables.plans'))->onDelete('cascade');
+            $table->foreignId('plan_id')->constrained(table: config('subscriptions.tables.plans'), indexName: 'plan_features_plan_id_foreign')
+                ->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('slug');
             $table->json('name');
             $table->json('description')->nullable();

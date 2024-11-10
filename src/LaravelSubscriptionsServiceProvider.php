@@ -19,10 +19,10 @@ class LaravelSubscriptionsServiceProvider extends PackageServiceProvider
             ->name('laravel-subscriptions')
             ->hasConfigFile()
             ->hasMigrations([
-                'create_plans_table',
-                'create_plan_subscriptions_table',
-                'create_plan_features_table',
-                'create_plan_subscription_usages_table',
+                '0001_create_plans_table',
+                '0002_create_plan_features_table',
+                '0003_create_plan_subscriptions_table',
+                '0004_create_plan_subscription_usages_table',
             ])
             ->hasCommand(LaravelSubscriptionsCommand::class);
     }

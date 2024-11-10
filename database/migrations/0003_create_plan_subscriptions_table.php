@@ -15,9 +15,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create(config('subscriptions.tables.plan_subscriptions'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->morphs('subscriber');
-            $table->integer('plan_id')->unsigned();
+            $table->foreignId('plan_id')->constrained(config('subscriptions.tables.plans'))
+                ->onDelete('cascade')->onUpdate('cascade');
             $table->string('slug')->unique();
             $table->json('name');
             $table->json('description')->nullable();
@@ -29,10 +30,6 @@ return new class extends Migration
             $table->string('timezone')->nullable();
             $table->timestamps();
             $table->softDeletes();
-
-            // Indexes
-            $table->foreign('plan_id')->references('id')->on(config('subscriptions.tables.plans'))
-                ->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

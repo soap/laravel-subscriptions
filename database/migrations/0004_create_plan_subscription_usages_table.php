@@ -15,19 +15,17 @@ return new class extends Migration
     {
         Schema::create(config('subscriptions.tables.plan_subscription_usage'), function (Blueprint $table) {
             $table->id();
-            $table->integer('subscription_id')->unsigned();
-            $table->integer('feature_id')->unsigned();
+            $table->foreignId('plan_subscription_id')->constrained(table: config('subscriptions.tables.plan_subscriptions'), indexName: 'subscription_usage_subscription_id_foreign')
+                ->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('plan_feature_id')->constrained(table: config('subscriptions.tables.plan_features'), indexName: 'subscription_usage_feature_id_foreign')
+                ->onDelete('cascade')->onUpdate('cascade');
             $table->smallInteger('used')->unsigned();
             $table->timestamp('valid_until')->nullable();
             $table->string('timezone')->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique(['subscription_id', 'feature_id']);
-            $table->foreign('subscription_id')->references('id')->on(config('subscriptions.tables.plan_subscriptions'))
-                ->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('feature_id')->references('id')->on(config('subscriptions.tables.plan_features'))
-                ->onDelete('cascade')->onUpdate('cascade');
+            $table->unique(['plan_subscription_id', 'plan_feature_id'], 'subscription_usage_feature_unique');
         });
     }
 
