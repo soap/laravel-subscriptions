@@ -31,9 +31,8 @@ class TestCase extends Orchestra
         ];
     }
 
-    protected function usesMySqlConnection($app) 
+    protected function usesMySqlConnection($app)
     {
         $app['config']->set('database.default', 'mysql');
     }
-
 }
