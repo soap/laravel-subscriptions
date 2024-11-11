@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-subscriptions` will be documented in this file.
 
+## v1.0.2 - 2024-11-11
+
+**Full Changelog**: https://github.com/soap/laravel-subscriptions/compare/v1.0.1...v1.0.2
+
 ## v1.0.1 - 2024-11-09
 
 ### What's Changed
