@@ -10,6 +10,10 @@ Soap Laravel Subscriptions is a flexible plans and subscription management syste
 
  - Payments are out of scope for this package.
  - You may want to extend some of the core models, in case you need to override the logic behind some helper methods like renew(), cancel() etc. E.g.: when cancelling a subscription you may want to also cancel the recurring payment attached.
+## Version Support
+| Laravel Subscriptions      | Larvel Version      |
+| ------------- | -------------------------------- |
+| 1.x           | 10.x, 11.x on PHP 8.2 and 8.3w 1 |
 
 ## Support us
 
