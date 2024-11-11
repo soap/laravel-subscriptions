@@ -27,7 +27,7 @@ composer require soap/laravel-subscriptions
 You can publish and run the migrations with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-subscriptions-migrations"
+php artisan vendor:publish --tag="subscriptions-migrations"
 php artisan migrate
 ```
 
