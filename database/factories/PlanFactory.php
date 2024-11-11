@@ -1,6 +1,6 @@
 <?php
 
-namespace Workbench\Database\Factories;
+namespace Soap\LaravelSubscriptions\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Soap\LaravelSubscriptions\Models\Plan;
