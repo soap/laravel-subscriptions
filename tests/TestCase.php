@@ -22,6 +22,8 @@ class TestCase extends Orchestra
         Factory::guessFactoryNamesUsing(
             fn (string $modelName) => 'Workbench\\Database\\Factories\\'.class_basename($modelName).'Factory'
         );
+
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations'); // load the package migrations
     }
 
     protected function getPackageProviders($app)

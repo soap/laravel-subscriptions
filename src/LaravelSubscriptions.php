@@ -2,6 +2,4 @@
 
 namespace Soap\LaravelSubscriptions;
 
-class LaravelSubscriptions
-{
-}
+class LaravelSubscriptions {}
