@@ -143,7 +143,7 @@ class Plan extends Model implements Sortable
      */
     public function features(): HasMany
     {
-        return $this->hasMany(config('subscriptions.models.plan_feature'), 'plan_id', 'id');
+        return $this->hasMany(config('subscriptions.models.plan_feature'));
     }
 
     /**
@@ -151,7 +151,7 @@ class Plan extends Model implements Sortable
      */
     public function subscriptions(): HasMany
     {
-        return $this->hasMany(config('subscriptions.models.plan_subscription'), 'plan_id', 'id');
+        return $this->hasMany(config('subscriptions.models.plan_subscription'));
     }
 
     /**

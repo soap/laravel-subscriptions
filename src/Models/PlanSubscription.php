@@ -97,6 +97,16 @@ class PlanSubscription extends Model
     protected static function boot()
     {
         parent::boot();
+
+        static::creating(function (self $model): void {
+            if (! $model->starts_at || ! $model->ends_at) {
+                $model->setNewPeriod();
+            }
+        });
+
+        static::deleted(function (self $subscription): void {
+            $subscription->usage()->delete();
+        });
     }
 
     /**
@@ -115,7 +125,7 @@ class PlanSubscription extends Model
      */
     public function subscriber(): MorphTo
     {
-        return $this->morphTo('subscriber');
+        return $this->morphTo('subscriber', 'subscriber_type', 'subscriber_id', 'id');
     }
 
     /**

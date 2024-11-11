@@ -5,9 +5,9 @@ namespace Soap\LaravelSubscriptions\Traits;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Laravelcm\Subscriptions\Models\Plan;
-use Laravelcm\Subscriptions\Models\Subscription;
-use Laravelcm\Subscriptions\Services\Period;
+use Soap\LaravelSubscriptions\Models\Plan;
+use Soap\LaravelSubscriptions\Models\PlanSubscription;
+use Soap\LaravelSubscriptions\Period;
 
 trait HasPlanSubscriptions
 {
@@ -36,7 +36,7 @@ trait HasPlanSubscriptions
         return $this->planSubscriptions->reject->inactive();
     }
 
-    public function planSubscription(string $subscriptionSlug): ?Subscription
+    public function planSubscription(string $subscriptionSlug): ?PlanSubscription
     {
         return $this->planSubscriptions()->where('slug', 'like', '%'.$subscriptionSlug.'%')->first();
     }
@@ -60,13 +60,14 @@ trait HasPlanSubscriptions
         return $subscription && $subscription->active();
     }
 
-    public function newPlanSubscription(string $subscription, Plan $plan, ?Carbon $startDate = null): Subscription
+    public function newPlanSubscription(string $subscription, Plan $plan, ?Carbon $startDate = null): PlanSubscription
     {
         $trial = new Period(
             interval: $plan->trial_interval,
             count: $plan->trial_period,
             start: $startDate ?? Carbon::now()
         );
+
         $period = new Period(
             interval: $plan->invoice_interval,
             count: $plan->invoice_period,
