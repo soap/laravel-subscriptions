@@ -2,6 +2,15 @@
 
 All notable changes to `laravel-subscriptions` will be documented in this file.
 
+## v1.0.3 - 2024-11-11
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 1.6.0 to 2.2.0 by @dependabot in https://github.com/soap/laravel-subscriptions/pull/12
+* Bump ramsey/composer-install from 2 to 3 by @dependabot in https://github.com/soap/laravel-subscriptions/pull/11
+
+**Full Changelog**: https://github.com/soap/laravel-subscriptions/compare/v1.0.2...v1.0.3
+
 ## v1.0.2 - 2024-11-11
 
 **Full Changelog**: https://github.com/soap/laravel-subscriptions/compare/v1.0.1...v1.0.2
