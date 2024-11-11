@@ -6,15 +6,14 @@
 [![Check & fix styling](https://github.com/soap/laravel-subscriptions/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/soap/laravel-subscriptions/actions/workflows/php-cs-fixer.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/soap/laravel-subscriptions.svg?style=flat-square)](https://packagist.org/packages/soap/laravel-subscriptions)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Soap Laravel Subscriptions is a flexible plans and subscription management system for Laravel, with the required tools to run your SAAS like services efficiently. It's simple architecture, accompanied by powerful underlying to afford solid platform for your business.
+
+ - Payments are out of scope for this package.
+ - You may want to extend some of the core models, in case you need to override the logic behind some helper methods like renew(), cancel() etc. E.g.: when cancelling a subscription you may want to also cancel the recurring payment attached.
 
 ## Support us
 
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-subscriptions.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-subscriptions)
 
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
 
 ## Installation
 
@@ -34,7 +33,7 @@ php artisan migrate
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-subscriptions-config"
+php artisan vendor:publish --tag="subscriptions-config"
 ```
 
 This is the contents of the published config file:
