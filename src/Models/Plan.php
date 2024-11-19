@@ -96,14 +96,6 @@ class Plan extends Model implements Sortable
     ];
 
     /**
-     * {@inheritdoc}
-     */
-    protected $observables = [
-        'validating',
-        'validated',
-    ];
-
-    /**
      * The attributes that are translatable.
      *
      * @var array

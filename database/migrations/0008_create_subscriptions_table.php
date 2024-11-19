@@ -14,7 +14,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create(config('subscriptions.tables.plan_subscriptions'), function (Blueprint $table) {
+        Schema::create(config('subscriptions.tables.subscriptions'), function (Blueprint $table) {
             $table->id();
             $table->morphs('subscriber');
             $table->foreignId('plan_id')->constrained(config('subscriptions.tables.plans'))
@@ -27,7 +27,6 @@ return new class extends Migration
             $table->timestamp('ends_at')->nullable();
             $table->timestamp('cancels_at')->nullable();
             $table->timestamp('canceled_at')->nullable();
-            $table->string('timezone')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -38,18 +37,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists(config('subscriptions.tables.plan_subscriptions'));
+        Schema::dropIfExists(config('subscriptions.tables.subscriptions'));
     }
 
-    /**
-     * Get jsonable column data type.
-     */
-    protected function jsonable(): string
-    {
-        $driverName = DB::connection()->getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME);
-        $dbVersion = DB::connection()->getPdo()->getAttribute(PDO::ATTR_SERVER_VERSION);
-        $isOldVersion = version_compare($dbVersion, '5.7.8', 'lt');
-
-        return $driverName === 'mysql' && $isOldVersion ? 'text' : 'json';
-    }
 };

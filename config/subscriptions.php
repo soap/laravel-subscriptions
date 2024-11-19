@@ -10,18 +10,20 @@ return [
     // Subscriptions Database Tables
     'tables' => [
         'plans' => 'plans',
+        'features' => 'features',
         'plan_features' => 'plan_features',
-        'plan_subscriptions' => 'plan_subscriptions',
-        'plan_subscription_usage' => 'plan_subscription_usage',
+        'subscriptions' => 'subscriptions',
+        'subscription_usages' => 'subscription_usages',
 
     ],
 
     // Subscriptions Models
     'models' => [
         'plan' => \Soap\LaravelSubscriptions\Models\Plan::class,
+        'feature' => \Soap\LaravelSubscriptions\Models\Feature::class,
         'plan_feature' => \Soap\LaravelSubscriptions\Models\PlanFeature::class,
-        'plan_subscription' => \Soap\LaravelSubscriptions\Models\PlanSubscription::class,
-        'plan_subscription_usage' => \Soap\LaravelSubscriptions\Models\PlanSubscriptionUsage::class,
+        'subscription' => \Soap\LaravelSubscriptions\Models\Subscription::class,
+        'subscription_usage' => \Soap\LaravelSubscriptions\Models\SubscriptionUsage::class,
     ],
 
 ];

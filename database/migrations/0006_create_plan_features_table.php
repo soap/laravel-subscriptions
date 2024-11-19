@@ -17,17 +17,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('plan_id')->constrained(table: config('subscriptions.tables.plans'), indexName: 'plan_features_plan_id_foreign')
                 ->cascadeOnDelete()->cascadeOnUpdate();
-            $table->string('slug');
-            $table->json('name');
-            $table->json('description')->nullable();
-            $table->string('value')->nullable();
-            $table->smallInteger('resettable_period')->unsigned()->default(0);
-            $table->string('resettable_interval')->default('month');
+            $table->foreignId('feature_id')->constrained(table: config('subscriptions.tables.features'), indexName: 'plan_feature_feature_id_foreign')
+                ->cascadeOnDelete()->cascadeOnUpdate();
+            $table->decimal('value')->nullable();
+            $table->string('unit')->nullable();
             $table->mediumInteger('sort_order')->unsigned()->default(0);
+
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique(['plan_id', 'slug']);
+            $table->unique(['plan_id', 'feature_id']);
         });
     }
 
