@@ -53,3 +53,31 @@ test('user can have a monthly active subscription plan', function (): void {
         ->and($this->user->subscription('main')->ends_at->toDateString())
         ->toBe(Carbon\Carbon::now()->addMonth()->addDays($this->plan->trial_period)->toDateString());
 });
+
+test('user can cancel a subscription', function (): void {
+    $this->user->newSubscription('main', $this->plan);
+
+    expect($this->user->subscribedTo($this->plan->id))
+        ->toBeTrue();
+
+    $this->user->subscription('main')->cancel(true);
+
+    expect($this->user->subscription('main')->canceled())
+        ->toBeTrue();
+});
+
+test('user can change plan', function (): void {
+    $plan = Plan::factory()->create([
+        'name' => 'Premium plan',
+        'description' => 'Premium plan description',
+        'price' => 300.00,
+        'signup_fee' => 100.00,
+    ]);
+
+    $this->user->newSubscription('main', $this->plan);
+
+    $this->user->subscription('main')->changePlan($plan);
+
+    expect($this->user->subscribedTo($plan->id))
+        ->toBeTrue();
+});

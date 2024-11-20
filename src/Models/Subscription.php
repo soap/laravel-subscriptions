@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Support\Facades\DB;
 use LogicException;
 use Soap\LaravelSubscriptions\Period;
+use Soap\LaravelSubscriptions\Traits\BelongsToPlan;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
@@ -40,6 +41,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class Subscription extends Model
 {
+    use BelongsToPlan;
     use HasSlug;
     use HasTranslations;
 
@@ -312,7 +314,7 @@ class Subscription extends Model
 
         $usage->save();
 
-        // @var PlanSubscriptionUsage
+        // @var SubscriptionUsage
         return $usage;
     }
 
