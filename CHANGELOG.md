@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-subscriptions` will be documented in this file.
 
+## Database changed. - 2024-11-20
+
+- Feature must be defined first, then add to Plan.
+
 ## v1.0.3 - 2024-11-11
 
 ### What's Changed
