@@ -29,34 +29,67 @@ class FeatureFactory extends Factory
         return [
             'name' => $this->faker->name,
             'description' => $this->faker->sentence,
+            'is_consumable' => $this->faker->boolean(),
+            'renewable_period' => $this->faker->randomDigitNotZero(),
+            'renewable_interval' => $this->faker->randomElement([
+                'year',
+                'month',
+                'week',
+                'day',
+            ]),
+            'is_quota' => false,
+            'is_postpaid' => false,
         ];
     }
 
-    public function isConsumable($consumable): Factory
+    public function consumable(): self
     {
-        return $this->state(function (array $attributes) use ($consumable) {
+        return $this->state(function (array $attributes) {
             return [
-                'is_consumable' => $consumable,
+                'is_consumable' => true,
             ];
         });
     }
 
-    public function isQuota($quota): self
+    public function notConsumable(): self
     {
-        return $this->state(function (array $attributes) use ($quota) {
-            return [
-                'is_quota' => $quota,
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'is_quota' => false,
+            'is_consumable' => false,
+            'renewable_period' => null,
+            'renewable_interval' => null,
+        ]);
     }
 
-    public function isPostpaid($postpaid): self
+    public function quota(): self
     {
-        return $this->state(function (array $attributes) use ($postpaid) {
-            return [
-                'is_postpaid' => $postpaid,
-            ];
-        });
+        return $this->state(fn (array $attributes) => [
+            'is_consumable' => true,
+            'is_quota' => true,
+            'renewable_period' => null,
+            'renewable_interval' => null,
+        ]);
+    }
+
+    public function notQuota(): self
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_quota' => false,
+        ]);
+    }
+
+    public function prepaid(): self
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_postpaid' => false,
+        ]);
+    }
+
+    public function postpaid(): self
+    {
+        return $this->state(fn (array $attributes) => [
+            'is_postpaid' => true,
+        ]);
     }
 
     public function renewable(int $period, string $interval = 'day'): self

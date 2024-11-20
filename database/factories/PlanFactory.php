@@ -27,7 +27,7 @@ class PlanFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
+            'name' => $this->faker->words(asText: true),
             'description' => $this->faker->sentence,
             'price' => $this->faker->randomFloat(2, 1, 100),
             'currency' => 'THB',
@@ -38,15 +38,23 @@ class PlanFactory extends Factory
         ];
     }
 
-    public function trialPeriod(int $days, ?string $unit = null): self
+    public function withTrialPeriod(int $count, ?string $unit = null): self
     {
         return $this->state(fn (array $attributes) => [
-            'trial_period_days' => $days,
+            'trial_period_days' => $count,
             'trial_interval' => $unit ?? 'day',
         ]);
     }
 
-    public function signUpFee(float $fee): self
+    public function withGracePeriod(int $count, ?string $unit = null): self
+    {
+        return $this->state(fn (array $attributes) => [
+            'trial_period_days' => $count,
+            'trial_interval' => $unit ?? 'day',
+        ]);
+    }
+
+    public function withSignUpFee(float $fee): self
     {
         return $this->state(fn (array $attributes) => [
             'signup_fee' => $fee,

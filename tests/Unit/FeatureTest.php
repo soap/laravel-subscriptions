@@ -12,15 +12,13 @@ it('can generate feature using factory', function () {
 
 it('can generate customized attributes of feature using factory', function () {
     $feature = Feature::factory()
-        ->isConsumable(false)
-        ->isPostpaid(true)
-        ->isQuota(true)
-        ->isPostpaid(true)
+        ->notConsumable()
+        ->prepaid()
         ->create();
-    ray($feature);
+
     expect($feature->name)->toBeString();
     expect($feature->description)->toBeString();
     expect($feature->is_consumable)->toBeFalse();
-    expect($feature->is_quota)->toBeTrue();
-    expect($feature->is_postpaid)->toBeTrue();
+    expect($feature->is_quota)->toBeFalse();
+    expect($feature->is_postpaid)->toBeFalse();
 });
