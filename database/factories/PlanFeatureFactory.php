@@ -27,11 +27,8 @@ class PlanFeatureFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'description' => $this->faker->sentence,
             'value' => $this->faker->numberBetween(0, 100),
-            'resettable_period' => 1,
-            'resettable_interval' => $this->faker->randomElement(['day', 'week', 'month', 'year']),
+            'sort_order' => 1,
         ];
     }
 }

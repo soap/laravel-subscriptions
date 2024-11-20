@@ -20,9 +20,9 @@ return new class extends Migration
             $table->json('name'); // translatable using spatie/laravel-translatable
             $table->json('description')->nullable();
 
-            $table->boolean('consumable')->default(true);
-            $table->boolean('quota')->default(false);
-            $table->boolean('post_paid')->default(false);
+            $table->boolean('is_consumable')->default(true);
+            $table->boolean('is_quota')->default(false);
+            $table->boolean('is_postpaid')->default(false);
 
             $table->integer('renewable_period')->nullable();
             $table->string('renewable_interval')->nullable();
@@ -33,7 +33,7 @@ return new class extends Migration
         });
     }
 
-        /**
+    /**
      * Reverse the migrations.
      */
     public function down(): void

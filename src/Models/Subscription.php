@@ -38,7 +38,7 @@ use Spatie\Translatable\HasTranslations;
  * @property-read \Soap\LaravelSubscriptions\Models\Plan $plan
  * @property-read \Illuminate\Database\Eloquent\Collection|\Soap\LaravelSubscriptions\Models\PlanSubscriptionUsage[] $usage
  */
-class PlanSubscription extends Model
+class Subscription extends Model
 {
     use HasSlug;
     use HasTranslations;
@@ -88,7 +88,7 @@ class PlanSubscription extends Model
 
     public function getTable()
     {
-        return config('subscriptions.tables.plan_subscriptions');
+        return config('subscriptions.tables.subscriptions');
     }
 
     /**
@@ -105,7 +105,7 @@ class PlanSubscription extends Model
         });
 
         static::deleted(function (self $subscription): void {
-            $subscription->usage()->delete();
+            $subscription->usages()->delete();
         });
     }
 
@@ -131,9 +131,9 @@ class PlanSubscription extends Model
     /**
      * The subscription may have many usage.
      */
-    public function usage(): hasMany
+    public function usages(): hasMany
     {
-        return $this->hasMany(config('subscriptions.models.plan_subscription_usage'), 'subscription_id', 'id');
+        return $this->hasMany(config('subscriptions.models.subscription_usage'), 'subscription_id', 'id');
     }
 
     /**
@@ -203,7 +203,7 @@ class PlanSubscription extends Model
         // a new billing cycle, the usage data will be cleared.
         if ($this->plan->invoice_interval !== $plan->invoice_interval || $this->plan->invoice_period !== $plan->invoice_period) {
             $this->setNewPeriod($plan->invoice_interval, $plan->invoice_period);
-            $this->usage()->delete();
+            $this->usages()->delete();
         }
 
         // Attach new plan to subscription
@@ -223,7 +223,7 @@ class PlanSubscription extends Model
 
         DB::transaction(function () use ($subscription) {
             // Clear usage data
-            $subscription->usage()->delete();
+            $subscription->usages()->delete();
 
             // Renew period
             $subscription->setNewPeriod();
@@ -284,17 +284,17 @@ class PlanSubscription extends Model
         return $this;
     }
 
-    public function recordFeatureUsage(string $featureSlug, int $uses = 1, bool $incremental = true): PlanSubscriptionUsage
+    public function recordFeatureUsage(string $featureSlug, int $uses = 1, bool $incremental = true): SubscriptionUsage
     {
         // @var PlanFeature $feature
         $feature = $this->plan->features()->where('slug', $featureSlug)->first();
-
-        $usage = $this->usage()->firstOrNew([
+        // @var SubcriptionUsage $usage
+        $usage = $this->usages()->firstOrNew([
             'subscription_id' => $this->getKey(),
             'feature_id' => $feature->getKey(),
         ]);
 
-        if ($feature->resettable_period) {
+        if ($feature->renewable_period) {
             // Set expiration date when the usage record is new or doesn't have one.
             if (is_null($usage->valid_until)) {
                 // Set date from subscription creation date so the reset
@@ -316,9 +316,9 @@ class PlanSubscription extends Model
         return $usage;
     }
 
-    public function reduceFeatureUsage(string $featureSlug, int $uses = 1): ?PlanSubscriptionUsage
+    public function reduceFeatureUsage(string $featureSlug, int $uses = 1): ?SubscriptionUsage
     {
-        $usage = $this->usage()->byFeatureSlug($featureSlug)->first();
+        $usage = $this->usages()->byFeatureSlug($featureSlug)->first();
 
         if (is_null($usage)) {
             return null;
@@ -334,7 +334,7 @@ class PlanSubscription extends Model
     public function canUseFeature(string $featureSlug): bool
     {
         $featureValue = $this->getFeatureValue($featureSlug);
-        $usage = $this->usage()->byFeatureSlug($featureSlug)->first();
+        $usage = $this->usages()->byFeatureSlug($featureSlug)->first();
 
         if ($featureValue === 'true') {
             return true;
@@ -352,7 +352,7 @@ class PlanSubscription extends Model
 
     public function getFeatureUsage(string $featureSlug): int
     {
-        $usage = $this->usage()->byFeatureSlug($featureSlug)->first();
+        $usage = $this->usages()->byFeatureSlug($featureSlug)->first();
 
         return ! $usage->expired() ? $usage->used : 0;
     }

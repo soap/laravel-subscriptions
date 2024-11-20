@@ -6,10 +6,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Soap\LaravelSubscriptions\Models\Plan;
-use Soap\LaravelSubscriptions\Models\PlanSubscription;
+use Soap\LaravelSubscriptions\Models\Subscription;
 use Soap\LaravelSubscriptions\Period;
 
-trait HasPlanSubscriptions
+trait HasSubscriptions
 {
     protected static function bootHasSubscriptions(): void
     {
@@ -21,7 +21,7 @@ trait HasPlanSubscriptions
     /**
      * The subscriber may have many plan subscriptions.
      */
-    public function planSubscriptions(): MorphMany
+    public function subscriptions(): MorphMany
     {
         return $this->morphMany(
             related: config('subscriptions.models.subscription'),
@@ -31,19 +31,19 @@ trait HasPlanSubscriptions
         );
     }
 
-    public function activePlanSubscriptions(): Collection
+    public function activeSubscriptions(): Collection
     {
-        return $this->planSubscriptions->reject->inactive();
+        return $this->subscriptions->reject->inactive();
     }
 
-    public function planSubscription(string $subscriptionSlug): ?PlanSubscription
+    public function subscription(string $subscriptionSlug): ?Subscription
     {
-        return $this->planSubscriptions()->where('slug', 'like', '%'.$subscriptionSlug.'%')->first();
+        return $this->subscriptions()->where('slug', 'like', '%'.$subscriptionSlug.'%')->first();
     }
 
     public function subscribedPlans(): Collection
     {
-        $planIds = $this->planSubscriptions->reject
+        $planIds = $this->subscriptions->reject
             ->inactive()
             ->pluck('plan_id')
             ->unique();
@@ -53,14 +53,14 @@ trait HasPlanSubscriptions
 
     public function subscribedTo(int $planId): bool
     {
-        $subscription = $this->planSubscriptions()
+        $subscription = $this->subscriptions()
             ->where('plan_id', $planId)
             ->first();
 
         return $subscription && $subscription->active();
     }
 
-    public function newPlanSubscription(string $subscription, Plan $plan, ?Carbon $startDate = null): PlanSubscription
+    public function newSubscription(string $subscription, Plan $plan, ?Carbon $startDate = null): Subscription
     {
         $trial = new Period(
             interval: $plan->trial_interval,
@@ -74,7 +74,7 @@ trait HasPlanSubscriptions
             start: $trial->getEndDate()
         );
 
-        return $this->planSubscriptions()->create([
+        return $this->subscriptions()->create([
             'name' => $subscription,
             'plan_id' => $plan->getKey(),
             'trial_ends_at' => $trial->getEndDate(),

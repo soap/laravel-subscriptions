@@ -7,11 +7,11 @@ namespace Soap\LaravelSubscriptions\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Soap\LaravelSubscriptions\Traits\HasSlug;
+use Soap\LaravelSubscriptions\Traits\HasTranslations;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
-use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
-use Spatie\Translatable\HasTranslations;
 
 /**
  * @property int $id
@@ -130,21 +130,20 @@ class Plan extends Model implements Sortable
             ->saveSlugsTo('slug');
     }
 
-    /**
-     * The plan may have many features.
-     */
-    public function features(): HasMany
+    public function features()
     {
-        return $this->hasMany(config('subscriptions.models.plan_feature'));
+        return $this->belongsToMany(config('subscriptions.models.feature'))
+            ->using(config('subscriptions.models.plan_features'))
+            ->withPivot(['value', 'unit', 'sort_order']);
     }
 
     /**
      * The plan may have many subscriptions.
      */
-    public function subscriptions(): HasMany
-    {
-        return $this->hasMany(config('subscriptions.models.plan_subscription'));
-    }
+    //public function subscriptions(): HasMany
+    //{
+    //    return $this->hasMany(config('subscriptions.models.plan_subscription'));
+    //}
 
     /**
      * Check if plan is free.

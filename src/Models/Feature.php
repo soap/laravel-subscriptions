@@ -19,17 +19,18 @@ class Feature extends Model
     protected $fillable = [
         'name',
         'description',
-        'consumable',
-        'quota',
-        'post_paid',
+        'slug',
+        'is_consumable',
+        'is_quota',
+        'is_postpaid',
         'renewable_period',
         'renewable_interval',
     ];
-    
+
     protected $casts = [
-        'consumable' => 'boolean',
-        'quota' => 'boolean',
-        'post_paid' => 'boolean',
+        'is_consumable' => 'boolean',
+        'is_quota' => 'boolean',
+        'is_postpaid' => 'boolean',
         'renewable_period' => 'integer',
         'renewable_interval' => 'string',
     ];
@@ -52,7 +53,7 @@ class Feature extends Model
     {
         return config('subscriptions.tables.features');
     }
-    
+
     /**
      * Get the options for generating the slug.
      */

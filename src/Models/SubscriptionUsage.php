@@ -17,9 +17,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Carbon\Carbon $valid_until
  * @property \Carbon\Carbon|null $deleted_at
  * @property-read \Soap\LaravelSubscriptions\Models\PlanFeature $feature
- * @property-read \Soap\LaravelSubscriptions\Models\PlanSubscription $subscription
+ * @property-read \Soap\LaravelSubscriptions\Models\Subscription $subscription
  */
-class PlanSubscriptionUsage extends Model
+class SubscriptionUsage extends Model
 {
     /**
      * {@inheritdoc}
@@ -44,7 +44,7 @@ class PlanSubscriptionUsage extends Model
 
     public function getTable()
     {
-        return config('subscriptions.tables.plan_subscription_usage');
+        return config('subscriptions.tables.subscription_usages');
     }
 
     /**
@@ -60,7 +60,7 @@ class PlanSubscriptionUsage extends Model
      */
     public function subscription(): BelongsTo
     {
-        return $this->belongsTo(config('subscriptions.models.plan_subscription'), 'subscription_id', 'id', 'subscription');
+        return $this->belongsTo(config('subscriptions.models.subscription'), 'subscription_id', 'id', 'subscription');
     }
 
     /**

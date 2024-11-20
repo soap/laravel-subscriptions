@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace Soap\LaravelSubscriptions\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Soap\LaravelSubscriptions\Period;
+use Illuminate\Database\Eloquent\Relations\Pivot;
+use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 
 /**
  * @property int $id
  * @property int $plan_id
-*/
+ */
 class PlanFeature extends Pivot implements Sortable
 {
     use HasFactory;
@@ -41,7 +40,6 @@ class PlanFeature extends Pivot implements Sortable
         'sort_order' => 'integer',
     ];
 
-
     /**
      * The sortable settings.
      *
@@ -51,7 +49,7 @@ class PlanFeature extends Pivot implements Sortable
         'order_column_name' => 'sort_order',
     ];
 
-    public function getTable()
+    public function getTable(): string
     {
         return config('subscriptions.tables.plan_features');
     }
