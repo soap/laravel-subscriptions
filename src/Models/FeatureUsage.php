@@ -8,10 +8,12 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
  * @property int $id
- * @property int $subscription_id
+ * @property string $subscriber_type
+ * @property int $subscriber_id
  * @property int $feature_id
  * @property int $used
  * @property \Carbon\Carbon $valid_until
@@ -19,7 +21,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property-read \Soap\LaravelSubscriptions\Models\PlanFeature $feature
  * @property-read \Soap\LaravelSubscriptions\Models\Subscription $subscription
  */
-class SubscriptionUsage extends Model
+class FeatureUsage extends Model
 {
     /**
      * {@inheritdoc}
@@ -35,16 +37,22 @@ class SubscriptionUsage extends Model
      * {@inheritdoc}
      */
     protected $casts = [
-        'subscription_id' => 'integer',
+        'subscriber_type' => 'string',
+        'subscriber_id' => 'integer',
         'feature_id' => 'integer',
-        'used' => 'integer',
+        'used' => 'decimal:2',
         'valid_until' => 'datetime',
         'deleted_at' => 'datetime',
     ];
 
-    public function getTable()
+    public function getTable(): string
     {
-        return config('subscriptions.tables.subscription_usages');
+        return config('subscriptions.tables.feature_usages');
+    }
+
+    public function subscriber(): MorphTo
+    {
+        return $this->morphTo();
     }
 
     /**
@@ -53,14 +61,6 @@ class SubscriptionUsage extends Model
     public function feature(): BelongsTo
     {
         return $this->belongsTo(config('subscriptions.models.plan_feature'), 'feature_id', 'id', 'feature');
-    }
-
-    /**
-     * Subscription usage always belongs to a plan subscription.
-     */
-    public function subscription(): BelongsTo
-    {
-        return $this->belongsTo(config('subscriptions.models.subscription'), 'subscription_id', 'id', 'subscription');
     }
 
     /**
@@ -83,5 +83,10 @@ class SubscriptionUsage extends Model
         }
 
         return Carbon::now()->gte($this->valid_until);
+    }
+
+    public function notExpired(): bool
+    {
+        return ! $this->expired();
     }
 }

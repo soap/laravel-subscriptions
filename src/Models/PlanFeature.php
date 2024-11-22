@@ -59,7 +59,7 @@ class PlanFeature extends Pivot implements Sortable
      */
     public function usages(): HasMany
     {
-        return $this->hasMany(config('subscriptions.models.subscription_usages'), 'feature_id', 'id');
+        return $this->hasMany(config('subscriptions.models.feature_usage'), 'feature_id', 'id');
     }
 
     public function feature(): BelongsTo

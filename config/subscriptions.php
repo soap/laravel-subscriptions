@@ -13,7 +13,7 @@ return [
         'features' => 'features',
         'plan_features' => 'plan_features',
         'subscriptions' => 'subscriptions',
-        'subscription_usages' => 'subscription_usages',
+        'feature_usages' => 'feature_usages',
 
     ],
 
@@ -23,7 +23,7 @@ return [
         'feature' => \Soap\LaravelSubscriptions\Models\Feature::class,
         'plan_feature' => \Soap\LaravelSubscriptions\Models\PlanFeature::class,
         'subscription' => \Soap\LaravelSubscriptions\Models\Subscription::class,
-        'subscription_usage' => \Soap\LaravelSubscriptions\Models\SubscriptionUsage::class,
+        'feature_usage' => \Soap\LaravelSubscriptions\Models\FeatureUsage::class,
     ],
 
 ];

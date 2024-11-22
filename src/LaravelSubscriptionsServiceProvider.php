@@ -23,7 +23,7 @@ class LaravelSubscriptionsServiceProvider extends PackageServiceProvider
                 '0004_create_plans_table',
                 '0006_create_plan_features_table',
                 '0008_create_subscriptions_table',
-                '0010_create_subscription_usages_table',
+                '0010_create_feature_usages_table',
             ])
             ->hasCommand(LaravelSubscriptionsCommand::class);
     }

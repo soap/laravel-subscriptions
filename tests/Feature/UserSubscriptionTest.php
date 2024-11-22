@@ -48,9 +48,9 @@ test('user can subscribe to plan', function () {
 test('user can have a monthly active subscription plan', function (): void {
     $this->user->newSubscription('main', $this->plan);
 
-    expect($this->user->subscription('main')->active())
+    expect($this->user->subscriptionBySlug('main')->active())
         ->toBeTrue()
-        ->and($this->user->subscription('main')->ends_at->toDateString())
+        ->and($this->user->subscriptionBySlug('main')->ends_at->toDateString())
         ->toBe(Carbon\Carbon::now()->addMonth()->addDays($this->plan->trial_period)->toDateString());
 });
 
@@ -60,9 +60,9 @@ test('user can cancel a subscription', function (): void {
     expect($this->user->subscribedTo($this->plan->id))
         ->toBeTrue();
 
-    $this->user->subscription('main')->cancel(true);
+    $this->user->subscriptionBySlug('main')->cancel(true);
 
-    expect($this->user->subscription('main')->canceled())
+    expect($this->user->subscriptionBySlug('main')->canceled())
         ->toBeTrue();
 });
 
@@ -76,7 +76,7 @@ test('user can change plan', function (): void {
 
     $this->user->newSubscription('main', $this->plan);
 
-    $this->user->subscription('main')->changePlan($plan);
+    $this->user->subscriptionBySlug('main')->changePlan($plan);
 
     expect($this->user->subscribedTo($plan->id))
         ->toBeTrue();

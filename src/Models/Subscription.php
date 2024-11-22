@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use LogicException;
 use Soap\LaravelSubscriptions\Period;
 use Soap\LaravelSubscriptions\Traits\BelongsToPlan;
-use Spatie\Sluggable\HasSlug;
+use Soap\LaravelSubscriptions\Traits\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Translatable\HasTranslations;
 
@@ -25,7 +25,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string $slug
  * @property array $name
  * @property array $description
- * @property \Carbon\Carbon $trial_ends_at
+ * @property \Carbon\Carbon $trial_period_ends_at
  * @property \Carbon\Carbon $starts_at
  * @property \Carbon\Carbon $ends_at
  * @property \Carbon\Carbon $cancels_at
@@ -55,11 +55,13 @@ class Subscription extends Model
         'slug',
         'name',
         'description',
-        'trial_ends_at',
+        'trial_period_ends_at',
+        'grace_period_ends_at',
         'starts_at',
         'ends_at',
         'cancels_at',
         'canceled_at',
+        'suppressed_at',
     ];
 
     /**
@@ -70,11 +72,13 @@ class Subscription extends Model
         'user_type' => 'string',
         'plan_id' => 'integer',
         'slug' => 'string',
-        'trial_ends_at' => 'datetime',
+        'trial_period_ends_at' => 'datetime',
+        'grace_period_ends_at' => 'datetime',
         'starts_at' => 'datetime',
         'ends_at' => 'datetime',
         'cancels_at' => 'datetime',
         'canceled_at' => 'datetime',
+        'suppressed_at' => 'datetime',
         'deleted_at' => 'datetime',
     ];
 
@@ -135,7 +139,7 @@ class Subscription extends Model
      */
     public function usages(): hasMany
     {
-        return $this->hasMany(config('subscriptions.models.subscription_usage'), 'subscription_id', 'id');
+        return $this->hasMany(config('subscriptions.models.feature_usage'), 'subscription_id', 'id');
     }
 
     /**
@@ -159,7 +163,7 @@ class Subscription extends Model
      */
     public function onTrial(): bool
     {
-        return $this->trial_ends_at ? Carbon::now()->lt($this->trial_ends_at) : false;
+        return $this->trial_period_ends_at ? Carbon::now()->lt($this->trial_period_ends_at) : false;
     }
 
     /**
@@ -247,12 +251,12 @@ class Subscription extends Model
         $from = Carbon::now();
         $to = Carbon::now()->addDays($dayRange);
 
-        return $builder->whereBetween('trial_ends_at', [$from, $to]);
+        return $builder->whereBetween('trial_period_ends_at', [$from, $to]);
     }
 
     public function scopeFindEndedTrial(Builder $builder): Builder
     {
-        return $builder->where('trial_ends_at', '<=', now());
+        return $builder->where('trial_period_ends_at', '<=', now());
     }
 
     public function scopeFindEndingPeriod(Builder $builder, int $dayRange = 3): Builder

@@ -19,7 +19,7 @@ return new class extends Migration
                 ->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('feature_id')->constrained(table: config('subscriptions.tables.features'), indexName: 'plan_feature_feature_id_foreign')
                 ->cascadeOnDelete()->cascadeOnUpdate();
-            $table->decimal('value')->nullable();
+            $table->decimal('credits')->nullable();
             $table->string('unit')->nullable();
             $table->mediumInteger('sort_order')->unsigned()->default(0);
 
